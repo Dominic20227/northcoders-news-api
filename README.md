@@ -3,4 +3,4 @@
 create 2 .env files in root of directory .env.test and .env.development
 
 in .env.development type - PGDATABASE=nc_news
-in env.test type - nc_news_test
+in env.test type - PGDATABASE=GITnc_news_test
