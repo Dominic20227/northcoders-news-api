@@ -11,7 +11,7 @@ exports.getArticleById = (req, res, next) => {
   model
     .selectArticleById(articleId)
     .then((data) => {
-      res.status(200).send(data);
+      res.status(200).send({ article: data });
     })
     .catch((err) => {
       next(err);
