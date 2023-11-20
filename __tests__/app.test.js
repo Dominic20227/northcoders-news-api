@@ -5,7 +5,7 @@ const testData = require("../db/data/test-data/index");
 
 seed(testData);
 
-describe.only("CORE: GET /api/topics", () => {
+describe("CORE: GET /api/topics", () => {
   it("responds with an array of topic objects - with properties slug and description", () => {
     return request(app)
       .get("/api/topics")
