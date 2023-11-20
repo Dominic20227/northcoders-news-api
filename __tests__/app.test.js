@@ -29,7 +29,7 @@ describe("CORE: GET /api/topics", () => {
   });
 });
 
-describe.only("CORE: GET /api", () => {
+describe("CORE: GET /api", () => {
   it("responds with array of endpoints in the form of object", () => {
     return request(app)
       .get("/api")
