@@ -2,8 +2,14 @@ const request = require("supertest");
 const app = require("../app");
 const seed = require("../db/seeds/seed");
 const testData = require("../db/data/test-data/index");
+const db = require("../db/connection");
 
-seed(testData);
+beforeAll(() => {
+  return seed(testData);
+});
+afterAll(() => {
+  return db.end();
+});
 
 describe("CORE: GET /api/topics", () => {
   it("responds with an array of topic objects - with properties slug and description", () => {
@@ -18,6 +24,47 @@ describe("CORE: GET /api/topics", () => {
             description: expect.any(String),
           });
         });
+      });
+  });
+});
+
+describe("CORE: GET /api/articles/:article_id", () => {
+  it("responds with article id", () => {
+    return request(app)
+      .get("/api/articles/1")
+      .expect(200)
+      .then(({ body }) => {
+        [body] = body;
+        console.log(body);
+        expect(body).toEqual({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: "2020-07-09T20:11:00.000Z",
+          votes: 100,
+          article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        });
+      });
+  });
+
+  it("return 400 bad request when article_id is out of range", () => {
+    return request(app)
+      .get("/api/articles/9999")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body).toEqual({ msg: "bad request" });
+      });
+  });
+
+  it("returns 400 bad request when passed an invalid datatype for article_id", () => {
+    return request(app)
+      .get("/api/articles/hello")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body).toEqual({ msg: "bad request" });
       });
   });
 });
