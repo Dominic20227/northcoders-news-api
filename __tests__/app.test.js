@@ -29,14 +29,14 @@ describe("CORE: GET /api/topics", () => {
 });
 
 describe("CORE: GET /api/articles/:article_id", () => {
-  it("responds with article id", () => {
+  it("sends array containing the object with specified article id", () => {
     return request(app)
       .get("/api/articles/1")
       .expect(200)
       .then(({ body }) => {
-        [body] = body;
-        console.log(body);
-        expect(body).toEqual({
+        const article = body.article[0];
+
+        expect(article).toEqual({
           article_id: 1,
           title: "Living in the shadow of a great man",
           topic: "mitch",
