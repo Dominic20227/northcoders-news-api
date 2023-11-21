@@ -5,3 +5,9 @@ exports.getAllTopics = (req, res) => {
     res.status(200).send(response);
   });
 };
+
+exports.getAllArticles = (req, res, next) => {
+  model.retrieveAllArticles().then((data) => {
+    res.status(200).send({ articles: data });
+  });
+};
