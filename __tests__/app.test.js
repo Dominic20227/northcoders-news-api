@@ -29,7 +29,7 @@ describe("CORE: GET /api/topics", () => {
 });
 
 describe("CORE: GET /api/articles", () => {
-  it.only("retrieves array of articles in decending order by date", () => {
+  it("retrieves array of articles in decending order by date", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
