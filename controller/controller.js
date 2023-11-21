@@ -5,3 +5,9 @@ exports.getAllTopics = (req, res) => {
     res.status(200).send(response);
   });
 };
+
+exports.getAllUsers = (req, res, next) => {
+  model.retrieveAllTopics().then((data) => {
+    res.status(200).send({ users: data });
+  });
+};

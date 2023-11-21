@@ -5,3 +5,9 @@ exports.selectAllTopics = () => {
     return rows;
   });
 };
+
+exports.retrieveAllTopics = () => {
+  return db.query(`SELECT * FROM users;`).then(({ rows }) => {
+    return rows;
+  });
+};
