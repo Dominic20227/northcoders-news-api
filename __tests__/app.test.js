@@ -50,12 +50,12 @@ describe("CORE: GET /api/articles/:article_id", () => {
       });
   });
 
-  it("return 400 bad request when article_id is out of range", () => {
+  it("return 404 not found when article_id is out of range", () => {
     return request(app)
       .get("/api/articles/9999")
-      .expect(400)
+      .expect(404)
       .then(({ body }) => {
-        expect(body).toEqual({ msg: "bad request" });
+        expect(body).toEqual({ msg: "404 not found" });
       });
   });
 
@@ -64,7 +64,7 @@ describe("CORE: GET /api/articles/:article_id", () => {
       .get("/api/articles/hello")
       .expect(400)
       .then(({ body }) => {
-        expect(body).toEqual({ msg: "bad request" });
+        expect(body).toEqual({ msg: "400 bad request" });
       });
   });
 });
