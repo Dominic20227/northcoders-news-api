@@ -57,16 +57,3 @@ describe("CORE: GET /api/articles", () => {
       });
   });
 });
-
-////////////////////
-///////////////////
-//////////////////
-/////////////////
-// for (let i = 0; i < articles.length - 1; i++) {
-//   if (
-//     Date.parse(articles[i].created_at) <
-//     Date.parse(articles[i + 1].created_at)
-//   ) {
-//     expect(false).toBe(true);
-//   }
-// }
