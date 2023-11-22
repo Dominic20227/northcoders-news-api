@@ -12,7 +12,7 @@ exports.deleteCommentById = (req, res, next) => {
   model
     .deleteComment(articleId)
     .then(() => {
-      res.status(204).send({});
+      res.sendStatus(204);
     })
     .catch((err) => {
       next(err);

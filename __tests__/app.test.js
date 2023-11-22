@@ -39,12 +39,21 @@ describe("Task 9: CORE: DELETE /api/comments/:comment_id", () => {
       });
   });
 
-  it("404: responds with 404 message when invalid id provided", () => {
+  it("404: responds with 404 message when ID is out of range", () => {
     return request(app)
       .delete("/api/comments/99")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toEqual("404 not found");
+      });
+  });
+
+  it("400: responds with 400 message when invalid id povided", () => {
+    return request(app)
+      .delete("/api/comments/banana")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toEqual("400 bad request");
       });
   });
 });
