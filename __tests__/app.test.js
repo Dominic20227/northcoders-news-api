@@ -8,7 +8,7 @@ beforeAll(() => {
   return seed(testData);
 });
 afterAll(() => {
-  db.end();
+  return db.end();
 });
 
 describe("CORE: GET /api/topics", () => {
@@ -35,9 +35,10 @@ describe("CORE: GET /api/articles", () => {
       .expect(200)
       .then(({ body }) => {
         const { articles } = body;
-        console.log("article 🙃", articles);
 
-        articles.forEach((article) => {
+        expect(articles).toHaveLength(13);
+
+        articles.forEach((article, i) => {
           expect(article).toMatchObject({
             author: expect.any(String),
             title: expect.any(String),
@@ -49,6 +50,15 @@ describe("CORE: GET /api/articles", () => {
             comment_count: expect.any(String),
           });
         });
+
+        for (let i = 0; i < articles.length - 1; i++) {
+          if (
+            Date.parse(articles[i].created_at) <
+            Date.parse(articles[i + 1].created_at)
+          ) {
+            expect(false).toBe(true);
+          }
+        }
       });
   });
 });
