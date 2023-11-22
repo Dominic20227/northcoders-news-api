@@ -37,6 +37,8 @@ describe("Task 10: CORE: GET /api/users", () => {
       .then(({ body }) => {
         const { users } = body;
 
+        expect(users.length).not.toBe(0);
+
         users.forEach((user) => {
           expect(user).toMatchObject({
             username: expect.any(String),
