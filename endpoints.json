@@ -6,9 +6,7 @@
     "GET /api/topics": {
       "description": "serves an array of all topics",
       "queries": [],
-      "exampleResponse": {
-        "topics": [{ "slug": "football", "description": "Footie!" }]
-      }
+      "exampleResponse": "N/A"
     },
     "GET /api/articles": {
       "description": "serves an array of all articles",
