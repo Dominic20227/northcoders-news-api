@@ -37,20 +37,18 @@ describe("8 CORE: PATCH /api/articles/:article_id", () => {
       .send(patchData)
       .expect(200)
       .then(({ body }) => {
-        const { articles } = body;
+        const { updatedArticle } = body;
 
-        articles.forEach((article) => {
-          expect(article).toEqual({
-            article_id: 7,
-            title: "Z",
-            topic: "mitch",
-            author: "icellusedkars",
-            body: "I was hungry.",
-            created_at: "2020-01-07T14:08:00.000Z",
-            votes: 1,
-            article_img_url:
-              "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
-          });
+        expect(updatedArticle).toEqual({
+          article_id: 7,
+          title: "Z",
+          topic: "mitch",
+          author: "icellusedkars",
+          body: "I was hungry.",
+          created_at: "2020-01-07T14:08:00.000Z",
+          votes: 1,
+          article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
         });
       });
   });
@@ -67,7 +65,7 @@ describe("8 CORE: PATCH /api/articles/:article_id", () => {
       });
   });
 
-  it("400: responds with bad request, when rying to insert  numeric data type into out of range article_id", () => {
+  it("404: responds with bad request, when trying to insert  numeric data type into out of range article_id", () => {
     const patchData = { inc_votes: 2 };
 
     return request(app)
@@ -76,6 +74,18 @@ describe("8 CORE: PATCH /api/articles/:article_id", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("404 not found");
+      });
+  });
+
+  it("400: responds with bad request, when trying to insert  numeric data type to invalid endpoint", () => {
+    const patchData = { inc_votes: 2 };
+
+    return request(app)
+      .patch("/api/articles/banana")
+      .send(patchData)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("400 bad request");
       });
   });
 });

@@ -12,7 +12,8 @@ exports.patchArticleById = (req, res, next) => {
   model
     .updateArticleById(articleId, patchData)
     .then((data) => {
-      res.status(200).send({ articles: data });
+      const article = data[0];
+      res.status(200).send({ updatedArticle: article });
     })
     .catch((err) => {
       next(err);
