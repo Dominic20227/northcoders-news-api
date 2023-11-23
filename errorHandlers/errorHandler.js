@@ -1,4 +1,4 @@
-exports.handleCustomError = (err, req, res, next) => {
+exports.handleCustomErrors = (err, req, res, next) => {
   if (err.status) {
     res.status(404).send({ msg: "404 not found" });
   }
@@ -6,7 +6,7 @@ exports.handleCustomError = (err, req, res, next) => {
 };
 
 exports.handlePsqlErrors = (err, req, res, next) => {
-  if (err.code) {
+  if (err.code === "22P02") {
     res.status(400).send({ msg: "400 bad request" });
   }
 };
