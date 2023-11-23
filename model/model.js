@@ -78,12 +78,6 @@ exports.retrieveAllArticles = (topic) => {
 
     return articles.rows;
   });
-  // return db.query(query, values).then(({ rows }) => {
-  //   if (rows.length === 0) {
-  //     return Promise.reject({ status: 404, msg: "404 not found" });
-  //   }
-  //   return rows;
-  // });
 };
 
 exports.retrieveApi = () => {
