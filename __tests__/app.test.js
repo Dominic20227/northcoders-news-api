@@ -309,7 +309,7 @@ describe("Task 10: CORE: GET /api/users", () => {
   });
 });
 
-describe("Task 10: CORE: GET /api/articles (topic query)", () => {
+describe("Task 11: CORE: GET /api/articles (topic query)", () => {
   it("200: filters articles based on topic", () => {
     return request(app)
       .get("/api/articles?topic=mitch")
