@@ -71,3 +71,17 @@ exports.patchArticleById = (req, res, next) => {
       next(err);
     });
 };
+
+exports.deleteCommentById = (req, res, next) => {
+  const articleId = req.params.comment_id;
+
+  model
+    .deleteComment(articleId)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+

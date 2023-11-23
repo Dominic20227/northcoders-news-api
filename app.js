@@ -21,6 +21,9 @@ app.post("/api/articles/:article_id/comments", controller.postArticleById);
 
 app.patch("/api/articles/:article_id", controller.patchArticleById);
 
+app.delete("/api/comments/:comment_id", controller.deleteCommentById);
+
+
 app.use(errorHandlers.handleCustomError);
 app.use(errorHandlers.handlePsqlErrors);
 module.exports = app;
