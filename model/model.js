@@ -22,7 +22,6 @@ exports.retrieveCommentsByArticleId = (articleId) => {
 };
 
 exports.retrieveAllArticles = (topic) => {
-  // Define the base SQL query
   let query = `
     SELECT
       a.article_id,
@@ -41,14 +40,11 @@ exports.retrieveAllArticles = (topic) => {
 
   const values = [];
 
-  // Check if a topic filter is provided
   if (topic) {
-    // Add the WHERE clause condition and push the topic value into the values array
     query += `WHERE a.topic = $1`;
     values.push(topic);
   }
 
-  // Add the GROUP BY and ORDER BY clauses
   query += `
     GROUP BY
       a.article_id
@@ -56,12 +52,39 @@ exports.retrieveAllArticles = (topic) => {
       a.created_at DESC;
   `;
 
-  return db.query(query, values).then(({ rows }) => {
-    if (rows.length === 0) {
+  if (!topic) {
+    return db.query(query, values).then(({ rows }) => {
+      return rows;
+    });
+  }
+
+  const getAllTopicsQuery = `SELECT slug FROM topics`;
+
+  return Promise.all([
+    db.query(query, values),
+    db.query(getAllTopicsQuery),
+  ]).then(([articles, topics]) => {
+    const validTopic = topics.rows.some(
+      (topicItem) => topicItem.slug === topic
+    );
+
+    if (!validTopic) {
+      console.log("hello");
       return Promise.reject({ status: 404, msg: "404 not found" });
     }
-    return rows;
+
+    if (articles.rows.length === 0) {
+      return Promise.reject({ status: 404, msg: "404 not found" });
+    }
+
+    return articles.rows;
   });
+  // return db.query(query, values).then(({ rows }) => {
+  //   if (rows.length === 0) {
+  //     return Promise.reject({ status: 404, msg: "404 not found" });
+  //   }
+  //   return rows;
+  // });
 };
 
 exports.retrieveApi = () => {
