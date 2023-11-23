@@ -1,10 +1,22 @@
+
 const db = require("../db/connection");
+const fs = require("fs/promises");
 
 exports.selectAllTopics = () => {
   return db.query(`SELECT * FROM topics`).then(({ rows }) => {
     return rows;
   });
 };
+
+
+
+exports.retrieveApi = () => {
+  return fs.readFile(`${__dirname}/../endpoints.json`).then((data) => {
+    return data;
+  });
+};
+
+
 
 exports.selectArticleById = (articleId) => {
   return db
@@ -16,3 +28,7 @@ exports.selectArticleById = (articleId) => {
       return rows;
     });
 };
+
+
+
+
