@@ -6,7 +6,6 @@ exports.getAllTopics = (req, res, next) => {
   });
 };
 
-
 exports.getAllArticles = (req, res, next) => {
   model.retrieveAllArticles().then((data) => {
     res.status(200).send({ articles: data });
@@ -18,10 +17,7 @@ exports.getApi = (req, res) => {
     const parsedData = JSON.parse(data);
     res.status(200).send(parsedData);
   });
-
 };
-
-
 
 exports.getArticleById = (req, res, next) => {
   const articleId = req.params.id;
@@ -33,3 +29,4 @@ exports.getArticleById = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+};
