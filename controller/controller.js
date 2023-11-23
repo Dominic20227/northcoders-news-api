@@ -19,9 +19,15 @@ exports.getCommentsByArticleId = (req, res, next) => {
 };
 
 exports.getAllArticles = (req, res, next) => {
-  model.retrieveAllArticles().then((data) => {
-    res.status(200).send({ articles: data });
-  });
+  const topic = req.query.topic;
+  model
+    .retrieveAllArticles(topic)
+    .then((data) => {
+      res.status(200).send({ articles: data });
+    })
+    .catch((err) => {
+      return next(err);
+    });
 };
 
 exports.getApi = (req, res) => {
@@ -57,7 +63,6 @@ exports.postArticleById = (req, res, next) => {
     });
 };
 
-
 exports.patchArticleById = (req, res, next) => {
   const articleId = req.params.article_id;
   const patchData = req.body.inc_votes;
@@ -85,10 +90,8 @@ exports.deleteCommentById = (req, res, next) => {
     });
 };
 
-
 exports.getAllUsers = (req, res, next) => {
   model.retrieveAllTopics().then((data) => {
     res.status(200).send({ users: data });
   });
 };
-

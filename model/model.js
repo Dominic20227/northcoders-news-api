@@ -21,30 +21,47 @@ exports.retrieveCommentsByArticleId = (articleId) => {
     });
 };
 
-exports.retrieveAllArticles = () => {
-  return db
-    .query(
-      `SELECT
-    a.article_id,
-    a.title,
-    a.topic,
-    a.author AS author,
-    a.created_at,
-    a.votes AS votes,
-    a.article_img_url,
-    COALESCE(COUNT(c.comment_id), 0) AS comment_count
-FROM
-    articles a
-LEFT JOIN
-    comments c ON a.article_id = c.article_id
-GROUP BY
-    a.article_id
-ORDER BY
-    a.created_at DESC;`
-    )
-    .then(({ rows }) => {
-      return rows;
-    });
+exports.retrieveAllArticles = (topic) => {
+  // Define the base SQL query
+  let query = `
+    SELECT
+      a.article_id,
+      a.title,
+      a.topic,
+      a.author AS author,
+      a.created_at,
+      a.votes AS votes,
+      a.article_img_url,
+      COALESCE(COUNT(c.comment_id), 0) AS comment_count
+    FROM
+      articles a
+    LEFT JOIN
+      comments c ON a.article_id = c.article_id
+    `;
+
+  const values = [];
+
+  // Check if a topic filter is provided
+  if (topic) {
+    // Add the WHERE clause condition and push the topic value into the values array
+    query += `WHERE a.topic = $1`;
+    values.push(topic);
+  }
+
+  // Add the GROUP BY and ORDER BY clauses
+  query += `
+    GROUP BY
+      a.article_id
+    ORDER BY
+      a.created_at DESC;
+  `;
+
+  return db.query(query, values).then(({ rows }) => {
+    if (rows.length === 0) {
+      return Promise.reject({ status: 404, msg: "404 not found" });
+    }
+    return rows;
+  });
 };
 
 exports.retrieveApi = () => {
