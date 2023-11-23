@@ -56,3 +56,18 @@ exports.postArticleById = (req, res, next) => {
       next(err);
     });
 };
+
+
+exports.patchArticleById = (req, res, next) => {
+  const articleId = req.params.article_id;
+  const patchData = req.body.inc_votes;
+  model
+    .updateArticleById(articleId, patchData)
+    .then((data) => {
+      const article = data[0];
+      res.status(200).send({ updatedArticle: article });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
