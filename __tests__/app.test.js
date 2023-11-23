@@ -158,7 +158,6 @@ describe("Task 7 - CORE: POST /api/articles/:article_id/comments", () => {
       .send(postData)
       .expect(201)
       .then(({ body }) => {
-        console.log(body);
         const { comments } = body;
 
         comments.forEach((comment) => {
@@ -186,7 +185,7 @@ describe("Task 7 - CORE: POST /api/articles/:article_id/comments", () => {
       });
   });
 
-  it.only("400 responds with bad request when given invalid query", () => {
+  it("400 responds with bad request when given invalid query", () => {
     const postData = { username: "JIM", body: "test123" };
 
     return request(app)

@@ -42,7 +42,6 @@ exports.getArticleById = (req, res, next) => {
       next(err);
     });
 };
-
 exports.postArticleById = (req, res, next) => {
   const articleId = req.params.article_id;
 
