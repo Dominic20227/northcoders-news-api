@@ -1,5 +1,5 @@
 exports.handleCustomErrors = (err, req, res, next) => {
-  if (err === "article_id out of range") {
+  if (err.status) {
     res.status(404).send({ msg: "404 not found" });
   }
   next(err);
