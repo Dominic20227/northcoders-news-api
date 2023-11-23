@@ -2,8 +2,8 @@ const request = require("supertest");
 const app = require("../app");
 const seed = require("../db/seeds/seed");
 const testData = require("../db/data/test-data/index");
+const db = require("../db/connection");
 
-const db = require("../db/connection.js");
 
 beforeEach(() => {
   return seed(testData);
@@ -26,6 +26,36 @@ describe("Task 2: CORE: GET /api/topics", () => {
             slug: expect.any(String),
             description: expect.any(String),
           });
+        });
+      });
+  });
+});
+
+describe("CORE: GET /api/articles", () => {
+  it("retrieves array of articles in decending order by date", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+
+        expect(articles).toHaveLength(13);
+
+        articles.forEach((article, i) => {
+          expect(article).toMatchObject({
+            author: expect.any(String),
+            title: expect.any(String),
+            article_id: expect.any(Number),
+            topic: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            article_img_url: expect.any(String),
+            comment_count: expect.any(String),
+          });
+        });
+
+        expect(articles).toBeSortedBy("created_at", {
+          descending: true,
         });
       });
   });
@@ -71,7 +101,7 @@ describe("Task 4: CORE: GET /api/articles/:article_id", () => {
       });
   });
 });
-=======
+
 describe("Task 3: CORE: GET /api", () => {
   it("responds with array of endpoints in the form of object", () => {
     return request(app)

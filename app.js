@@ -14,4 +14,6 @@ app.use(errorHandlers.handlePsqlErrors);
 
 
 
+app.get("/api/articles", controller.getAllArticles);
+
 module.exports = app;
