@@ -69,7 +69,6 @@ exports.retrieveAllArticles = (topic) => {
     );
 
     if (!validTopic) {
-      console.log("hello");
       return Promise.reject({ status: 404, msg: "404 not found" });
     }
 
