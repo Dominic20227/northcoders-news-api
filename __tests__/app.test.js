@@ -293,3 +293,24 @@ describe("Task 9: CORE: DELETE /api/comments/:comment_id", () => {
   });
 });
 
+
+describe("Task 10: CORE: GET /api/users", () => {
+  it("responds with array of objects of users", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        const { users } = body;
+
+        expect(users.length).not.toBe(0);
+
+        users.forEach((user) => {
+          expect(user).toMatchObject({
+            username: expect.any(String),
+            name: expect.any(String),
+            avatar_url: expect.any(String),
+          });
+        });
+      });
+  });
+});

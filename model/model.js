@@ -113,3 +113,9 @@ exports.deleteComment = (articleId) => {
       return {};
     });
 };
+
+exports.retrieveAllTopics = () => {
+  return db.query(`SELECT * FROM users;`).then(({ rows }) => {
+    return rows;
+  });
+};

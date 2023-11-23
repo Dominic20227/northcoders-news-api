@@ -85,3 +85,10 @@ exports.deleteCommentById = (req, res, next) => {
     });
 };
 
+
+exports.getAllUsers = (req, res, next) => {
+  model.retrieveAllTopics().then((data) => {
+    res.status(200).send({ users: data });
+  });
+};
+
