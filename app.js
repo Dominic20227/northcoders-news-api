@@ -23,10 +23,8 @@ app.patch("/api/articles/:article_id", controller.patchArticleById);
 
 app.delete("/api/comments/:comment_id", controller.deleteCommentById);
 
-
 app.get("/api/users", controller.getAllUsers);
 
-
-app.use(errorHandlers.handleCustomError);
+app.use(errorHandlers.handleCustomErrors);
 app.use(errorHandlers.handlePsqlErrors);
 module.exports = app;
