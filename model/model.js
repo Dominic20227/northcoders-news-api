@@ -81,7 +81,6 @@ exports.insertCommentByArticleId = (username, body, articleID) => {
     });
 };
 
-
 exports.updateArticleById = (articleId, patchData) => {
   return db
     .query(
@@ -93,12 +92,8 @@ exports.updateArticleById = (articleId, patchData) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        return Promise.reject("404 not found");
+        return Promise.reject({ status: 404, msg: "404 not found" });
       }
       return rows;
     });
 };
-
-
-
-
