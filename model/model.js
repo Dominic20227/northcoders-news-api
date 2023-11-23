@@ -98,8 +98,6 @@ exports.updateArticleById = (articleId, patchData) => {
     });
 };
 
-
-
 exports.deleteComment = (articleId) => {
   return db
     .query(
@@ -110,10 +108,8 @@ exports.deleteComment = (articleId) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        return Promise.reject({status:404, msg: '404 not found');
+        return Promise.reject({ status: 404, msg: "404 not found" });
       }
       return {};
     });
 };
-
-
