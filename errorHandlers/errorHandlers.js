@@ -1,5 +1,5 @@
 exports.handleCustomError = (err, req, res, next) => {
-  if (err === "404 not found") {
+  if (err.status) {
     res.status(404).send({ msg: "404 not found" });
   }
   next(err);

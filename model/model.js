@@ -1,4 +1,3 @@
-
 const db = require("../db/connection");
 const fs = require("fs/promises");
 
@@ -16,8 +15,11 @@ exports.retrieveCommentsByArticleId = (articleId) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        return Promise.reject("404 not found");
-
+        return Promise.reject({ status: 404, msg: "404 not found" });
+      }
+      return rows;
+    });
+};
 
 exports.retrieveAllArticles = () => {
   return db
@@ -45,15 +47,11 @@ ORDER BY
     });
 };
 
-
-
 exports.retrieveApi = () => {
   return fs.readFile(`${__dirname}/../endpoints.json`).then((data) => {
     return data;
   });
 };
-
-
 
 exports.selectArticleById = (articleId) => {
   return db
@@ -61,7 +59,6 @@ exports.selectArticleById = (articleId) => {
     .then(({ rows }) => {
       if (rows.length === 0) {
         return Promise.reject({ status: 404, msg: "not found" });
-
       }
       return rows;
     });

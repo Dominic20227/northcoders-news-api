@@ -4,12 +4,9 @@ const seed = require("../db/seeds/seed");
 const testData = require("../db/data/test-data/index");
 const db = require("../db/connection");
 
-
-
 beforeEach(() => {
   return seed(testData);
 });
-
 
 afterAll(() => {
   return db.end();
@@ -39,7 +36,6 @@ describe("Task 6: CORE: GET /api/articles/:article_id/comments", () => {
       .expect(200)
       .then(({ body }) => {
         const { comments } = body;
-        console.log("comments-------->", comments);
 
         comments.forEach((comment) => {
           expect(comment.article_id).toBe(1);
@@ -65,7 +61,7 @@ describe("Task 6: CORE: GET /api/articles/:article_id/comments", () => {
       });
   });
 });
-=======
+
 describe("Task 5: CORE: GET /api/articles", () => {
   it("retrieves array of articles in decending order by date", () => {
     return request(app)
@@ -153,5 +149,3 @@ describe("Task 3: CORE: GET /api", () => {
       });
   });
 });
-
-
