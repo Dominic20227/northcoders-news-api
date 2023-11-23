@@ -1,4 +1,4 @@
-exports.handleCustomError = (err, req, res, next) => {
+exports.handleCustomErrors = (err, req, res, next) => {
   if (err.status) {
     res.status(404).send({ msg: "404 not found" });
   }
