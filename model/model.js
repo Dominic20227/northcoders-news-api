@@ -72,6 +72,10 @@ exports.retrieveAllArticles = (topic) => {
       return Promise.reject({ status: 404, msg: "404 not found" });
     }
 
+    if (articles.rows.length === 0 && validTopic) {
+      return Promise.resolve({ status: 200, msg: [] });
+    }
+
     if (articles.rows.length === 0) {
       return Promise.reject({ status: 404, msg: "404 not found" });
     }

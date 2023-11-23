@@ -335,9 +335,9 @@ describe("Task 11: CORE: GET /api/articles (topic query)", () => {
   it("404: responds with 404 when valid topic but no articles", () => {
     return request(app)
       .get("/api/articles?topic=paper")
-      .expect(404)
+      .expect(200)
       .then(({ body }) => {
-        expect(body.msg).toBe("404 not found");
+        expect(body.articles.msg).toEqual([]);
       });
   });
 });
