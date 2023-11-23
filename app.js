@@ -16,6 +16,8 @@ app.get(
   controller.getCommentsByArticleId
 );
 
+app.post("/api/articles/:article_id/comments", controller.postArticleById);
+
 app.use(errorHandlers.handleCustomError);
 app.use(errorHandlers.handlePsqlErrors);
 module.exports = app;
