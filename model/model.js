@@ -8,6 +8,16 @@ exports.selectAllTopics = () => {
   });
 };
 
+exports.retrieveCommentsByArticleId = (articleId) => {
+  return db
+    .query(
+      `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC;`,
+      [articleId]
+    )
+    .then(({ rows }) => {
+      if (rows.length === 0) {
+        return Promise.reject("404 not found");
+
 
 exports.retrieveAllArticles = () => {
   return db
@@ -51,12 +61,8 @@ exports.selectArticleById = (articleId) => {
     .then(({ rows }) => {
       if (rows.length === 0) {
         return Promise.reject({ status: 404, msg: "not found" });
+
       }
       return rows;
     });
 };
-
-
-
-
-

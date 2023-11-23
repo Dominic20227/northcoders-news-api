@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 
 const controller = require("./controller/controller");
-const errorHandlers = require("./errorHandlers/errorHandler.js");
+
+const errorHandlers = require("./errorHandlers/errorHandlers");
+
 
 app.get("/api/topics", controller.getAllTopics);
 app.get("/api", controller.getApi);
@@ -16,4 +18,11 @@ app.use(errorHandlers.handlePsqlErrors);
 
 app.get("/api/articles", controller.getAllArticles);
 
+app.get(
+  "/api/articles/:article_id/comments",
+  controller.getCommentsByArticleId
+);
+
+app.use(errorHandlers.handleCustomError);
+app.use(errorHandlers.handlePsqlErrors);
 module.exports = app;

@@ -6,6 +6,14 @@ exports.getAllTopics = (req, res, next) => {
   });
 };
 
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  const articleId = req.params.article_id;
+  model
+    .retrieveCommentsByArticleId(articleId)
+    .then((data) => {
+      res.status(200).send({ comments: data });
+
 exports.getAllArticles = (req, res, next) => {
   model.retrieveAllArticles().then((data) => {
     res.status(200).send({ articles: data });
@@ -25,6 +33,7 @@ exports.getArticleById = (req, res, next) => {
     .selectArticleById(articleId)
     .then((data) => {
       res.status(200).send({ article: data });
+
     })
     .catch((err) => {
       next(err);
