@@ -207,7 +207,6 @@ describe("8 CORE: PATCH /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         const { updatedArticle } = body;
-
         expect(updatedArticle).toEqual({
           article_id: 7,
           title: "Z",
@@ -331,7 +330,6 @@ describe("Task 12: CORE: GET /api/articles/:article_id (comment_count) ", () => 
       });
   });
 });
-
 
 describe("Task 11: CORE: GET /api/articles (topic query)", () => {
   it("200: filters articles based on topic", () => {
