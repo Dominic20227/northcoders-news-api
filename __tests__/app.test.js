@@ -331,3 +331,37 @@ describe("Task 12: CORE: GET /api/articles/:article_id (comment_count) ", () => 
       });
   });
 });
+
+
+describe("Task 11: CORE: GET /api/articles (topic query)", () => {
+  it("200: filters articles based on topic", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+
+        articles.forEach((article) => {
+          expect(article.topic).toBe("mitch");
+        });
+      });
+  });
+
+  it("404: responds with 404 when no topic matches query", () => {
+    return request(app)
+      .get("/api/articles?topic=banana")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("404 not found");
+      });
+  });
+
+  it("200: responds with 200 when valid topic but no articles", () => {
+    return request(app)
+      .get("/api/articles?topic=paper")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles).toEqual([]);
+      });
+  });
+});

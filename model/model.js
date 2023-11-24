@@ -21,30 +21,59 @@ exports.retrieveCommentsByArticleId = (articleId) => {
     });
 };
 
-exports.retrieveAllArticles = () => {
-  return db
-    .query(
-      `SELECT
-    a.article_id,
-    a.title,
-    a.topic,
-    a.author AS author,
-    a.created_at,
-    a.votes AS votes,
-    a.article_img_url,
-    COALESCE(COUNT(c.comment_id), 0) AS comment_count
-FROM
-    articles a
-LEFT JOIN
-    comments c ON a.article_id = c.article_id
-GROUP BY
-    a.article_id
-ORDER BY
-    a.created_at DESC;`
-    )
-    .then(({ rows }) => {
+exports.retrieveAllArticles = (topic) => {
+  let query = `
+    SELECT
+      a.article_id,
+      a.title,
+      a.topic,
+      a.author AS author,
+      a.created_at,
+      a.votes AS votes,
+      a.article_img_url,
+      COALESCE(COUNT(c.comment_id), 0) AS comment_count
+    FROM
+      articles a
+    LEFT JOIN
+      comments c ON a.article_id = c.article_id
+    `;
+
+  const values = [];
+
+  if (topic) {
+    query += `WHERE a.topic = $1`;
+    values.push(topic);
+  }
+
+  query += `
+    GROUP BY
+      a.article_id
+    ORDER BY
+      a.created_at DESC;
+  `;
+
+  if (!topic) {
+    return db.query(query, values).then(({ rows }) => {
       return rows;
     });
+  }
+
+  const getAllTopicsQuery = `SELECT slug FROM topics`;
+
+  return Promise.all([
+    db.query(query, values),
+    db.query(getAllTopicsQuery),
+  ]).then(([articles, topics]) => {
+    const validTopic = topics.rows.some(
+      (topicItem) => topicItem.slug === topic
+    );
+
+    if (!validTopic) {
+      return Promise.reject({ status: 404, msg: "404 not found" });
+    }
+
+    return articles.rows;
+  });
 };
 
 exports.retrieveApi = () => {
