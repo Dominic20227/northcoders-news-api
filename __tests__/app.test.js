@@ -100,7 +100,7 @@ describe("Task 4: CORE: GET /api/articles/:article_id", () => {
       .then(({ body }) => {
         const article = body.article[0];
 
-        expect(article).toEqual({
+        expect(article).toMatchObject({
           article_id: 1,
           title: "Living in the shadow of a great man",
           topic: "mitch",
@@ -198,11 +198,6 @@ describe("Task 7 - CORE: POST /api/articles/:article_id/comments", () => {
   });
 });
 
-
-
-
-
-
 describe("8 CORE: PATCH /api/articles/:article_id", () => {
   const patchData = { inc_votes: 1 };
   it("200: returns article with updated votes, when passed a valid number of an article in request body", () => {
@@ -293,7 +288,6 @@ describe("Task 9: CORE: DELETE /api/comments/:comment_id", () => {
   });
 });
 
-
 describe("Task 10: CORE: GET /api/users", () => {
   it("responds with array of objects of users", () => {
     return request(app)
@@ -310,6 +304,29 @@ describe("Task 10: CORE: GET /api/users", () => {
             name: expect.any(String),
             avatar_url: expect.any(String),
           });
+        });
+      });
+  });
+});
+
+describe("Task 12: CORE: GET /api/articles/:article_id (comment_count) ", () => {
+  it("200: sends articles filtered by article_id  with a total of comments for that ID", () => {
+    return request(app)
+      .get("/api/articles/1")
+      .then(({ body }) => {
+        const article = body.article[0];
+
+        expect(article).toMatchObject({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: "2020-07-09T20:11:00.000Z",
+          votes: 100,
+          article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+          comment_count: "11",
         });
       });
   });
