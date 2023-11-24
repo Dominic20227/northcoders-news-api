@@ -30,7 +30,7 @@ The test database will be seeded each time a test is run
 
 Run the command npm run test
 
-## HOW TO CREATE TO SET UP CONNECTION TO DATABASE -CREATING .ENV FILES
+## HOW TO SET UP CONNECTION TO DATABASE -CREATING .ENV FILES
 
 _assuming you have installed psql and set default password_
 
