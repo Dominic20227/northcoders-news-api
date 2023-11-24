@@ -2,12 +2,12 @@
 
 ## Link to hosted version
 
-https://articlesapi-jz0j.onrender.com
+https://articlesapi-jz0j.onrender.com/api/
 
 ## SUMMARY OF PROJECT
 
 Node.js web application built using the Express.js framework. It sets up various API routes and utilizes a controller module to handle different HTTP requests/responses and a model module to query the database. Additionally, it includes error handling middleware.
-This app uses a postgre database.
+This app uses a postgres database.
 
 ## HOW TO CLONE
 
