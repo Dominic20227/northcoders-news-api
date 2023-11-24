@@ -337,7 +337,7 @@ describe("Task 11: CORE: GET /api/articles (topic query)", () => {
       .get("/api/articles?topic=paper")
       .expect(200)
       .then(({ body }) => {
-        expect(body.articles.msg).toEqual([]);
+        expect(body.articles).toEqual([]);
       });
   });
 });
